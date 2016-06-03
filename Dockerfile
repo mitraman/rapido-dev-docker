@@ -44,8 +44,10 @@ EXPOSE 8090
 #This directory is needed for the ssh daemon
 RUN mkdir /var/run/sshd
 
-#The debian node package installs a binary called nodejs, but we need it to be node
-RUN ln -s /usr/bin/nodejs /usr/bin/node
+# Debian's node package is very out of date, so we will need to manually install node
+RUN apt-get install -y wget
+RUN wget https://nodejs.org/dist/v4.4.5/node-v4.4.5-linux-x64.tar.xz
+RUN tar -C /usr --strip-components 1 -xJf node-v4.4.5-linux-x64.tar.xz
 
 #clone latest rapido repo
 #github account credentials will come from environment variables
